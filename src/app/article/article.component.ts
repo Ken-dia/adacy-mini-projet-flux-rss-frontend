@@ -21,13 +21,17 @@ export class ArticleComponent implements OnInit {
 
   public selectedArticle = <IArticle>{};
 
-  public title = new FormControl('', Validators.required);
+  public title = new FormControl('',Validators.required);
   public description = new FormControl('', Validators.required);
 
   public showError = false;
 
+  public totalItems = 0;
+
+  public itemsPerPage = 0;
+
   public currentPage = 1;
-  page?: number;
+  public page?: number;
 
   constructor(private service:ArticleService, private modalService: BsModalService) { }
 
@@ -47,6 +51,8 @@ export class ArticleComponent implements OnInit {
       .subscribe((response) => {
         this.articles = response
         this.currentPage = this.articles.meta.current_page;
+        this.totalItems = this.articles.meta.total;
+        this.itemsPerPage = this.articles.meta.per_page;
       } );
   }
 
@@ -68,18 +74,20 @@ export class ArticleComponent implements OnInit {
   }
 
   save() {
-    if(!this.title.value || !this.description.value) {
+     if(!this.title.value || !this.description.value) {
       this.showError = true;
       return;
     }
     this.selectedArticle.title = this.title.value;
     this.selectedArticle.description = this.description.value;
+    console.log(this.selectedArticle);
 
     this.service.update(this.selectedArticle).
     subscribe((response ) => {
       this.reset();
       this.getList();
       this.showError = false;
+      this.modalRef?.hide();
     });
   }
 
