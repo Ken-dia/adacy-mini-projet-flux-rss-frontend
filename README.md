@@ -8,8 +8,8 @@
 > - pouvoir modifier l'extrait
 ## Technologies utilisées
 
-  #### Laravel9 (Backend)
-  #### Angular13 (Frontend)
+   ###### > - Laravel9 (Backend)
+   ######  > - Angular13 (Frontend)
   
 ### 1. Install NPM Dependencies
 
