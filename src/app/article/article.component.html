@@ -1,0 +1,58 @@
+<div class="row" >
+  <div class="col-md-4 mb-3" *ngFor="let article of articles.data; index as i">
+    <div class="card" style="width: 340px;" >
+      <img [src]="article.url_img" class="card-img-top" alt="...">
+      <div class="card-body">
+        <!-- <h5 class="card-title">{{article.title}}</h5> -->
+        <p class="card-text">{{ article.description }}</p>
+        <button type="button" class="btn btn-outline-info" (click)="openModal(template, article)">Modifier</button>
+      </div>
+    </div>
+  </div>
+  <!--  -->
+</div>
+<div class="row">
+  <div class="col-xs-12 col-12">
+    <pagination [totalItems]="articles.meta.total" [(ngModel)]="currentPage" [itemsPerPage]="articles.meta.per_page" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>
+
+<!-- <nav aria-label="...">
+  <ul class="pagination">
+    <li class="page-item disabled">
+      <span class="page-link">Previous</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item active" aria-current="page">
+      <span class="page-link">2</span>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#">Next</a>
+    </li>
+  </ul>
+</nav> -->
+
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{titleModale}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Titre</label>
+      <input type="text" class="form-control" id="title" placeholder="Entrer le titre" [formControl]="title">
+      <!-- <small *ngIf="title.errors?.required && showError">Ce champ est obligatoire.!</small> -->
+    </div>
+    <div class="form-group">
+      <label for="description">Extrait</label>
+      <textarea class="form-control" id="extrait" rows="3" [formControl]="description"></textarea>
+      <!-- <small *ngIf="description.errors?.required && showError" >Ce champ est obligatoire.!</small> -->
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" (click)="modalRef?.hide();save">
+      {{btnTitle}}
+  </button>
+</ng-template>
